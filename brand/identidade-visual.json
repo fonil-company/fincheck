@@ -1,0 +1,116 @@
+{
+  "marca": {
+    "nome": "Aridiego Pereira",
+    "descritor": "Assessoria Bancária",
+    "monograma": "AP",
+    "posicionamento": "Especialista autorizado em crédito/empréstimo — atendimento próximo, premium e sem burocracia.",
+    "contato": { "whatsapp": "+55 86 99513-9158", "exibicao": "(86) 9 9513-9158" },
+    "arquivos": {
+      "logo_completo": "public/brand/logo-aridiego.jpg",
+      "monograma": "public/brand/monograma-ap.jpg",
+      "foto_especialista": "public/brand/aridiego.jpg",
+      "observacao": "Logos recortados das artes (fundo preto). Use mix-blend-mode: lighten sobre fundos escuros. Pedir ao cliente o arquivo vetorial (SVG/PDF) do logo."
+    }
+  },
+  "conceito": "Luxo discreto / private banking: fundo preto profundo, tipografia elegante, dourado metálico como única cor de destaque, iluminação dramática.",
+  "cores": {
+    "fundo": {
+      "preto_profundo": "#0A0A0A",
+      "preto_superficie": "#141414",
+      "preto_elevado": "#1C1C1C",
+      "linha_sutil": "#2A2A2A"
+    },
+    "dourado": {
+      "claro": "#F3D58A",
+      "principal": "#C9A24B",
+      "medio": "#B8893A",
+      "escuro": "#8A6A2B",
+      "gradiente_metalico": "linear-gradient(135deg, #F3D58A 0%, #C9A24B 45%, #8A6A2B 100%)",
+      "gradiente_barra": "linear-gradient(90deg, #8A6A2B 0%, #F6E7A8 50%, #8A6A2B 100%)",
+      "brilho_linha": "linear-gradient(90deg, transparent, #C9A24B, transparent)"
+    },
+    "texto": {
+      "primario": "#F5F5F5",
+      "secundario": "#B5B5B5",
+      "terciario": "#7A7A7A",
+      "sobre_dourado": "#0A0A0A"
+    },
+    "estado": {
+      "erro": "#E5484D",
+      "sucesso": "#3FB950",
+      "foco": "#C9A24B"
+    },
+    "regra_uso": "≈85% preto, ≈10% branco/cinza, ≈5% dourado. Dourado só em palavras-chave, números de destaque, ícones de linha, bordas e CTA."
+  },
+  "tipografia": {
+    "display_serifa": {
+      "familia": "Playfair Display",
+      "uso": "Títulos emocionais grandes (ex.: 'Seu caixa vive no vermelho?')",
+      "pesos": [500, 600, 700]
+    },
+    "sans_principal": {
+      "familia": "Montserrat",
+      "uso": "Textos, subtítulos, formulários, botões",
+      "pesos": [300, 400, 500, 600, 700]
+    },
+    "condensada_impacto": {
+      "familia": "Oswald",
+      "uso": "Números e chamadas em CAIXA ALTA (ex.: '0,99%', 'FALTA DE RECURSOS')",
+      "pesos": [500, 600]
+    },
+    "logo_serifa": {
+      "familia": "Cinzel (aproximação)",
+      "uso": "Apenas para assinatura 'ARIDIEGO PEREIRA' quando o arquivo do logo não estiver disponível"
+    },
+    "padroes": {
+      "eyebrow": "Montserrat 500, caixa alta, letter-spacing 0.2em, 12–14px, dourado",
+      "h1": "Playfair Display 600, 40–64px, line-height 1.05, palavra-chave em dourado",
+      "corpo": "Montserrat 400, 16px, line-height 1.6, #B5B5B5 com destaques em 600 branco/dourado"
+    }
+  },
+  "elementos_graficos": {
+    "divisor": "Linha fina de 1px dourada com brilho central (brilho_linha)",
+    "linha_vertical": "Filete dourado vertical à esquerda do bloco de texto",
+    "barra_dourada": "Barra de 8–12px com gradiente_barra embaixo de caixas de texto",
+    "icones": "Line icons dourados (stroke 1.5px) dentro de hexágonos com borda dourada",
+    "cards": "Fundo #141414 a 80%, borda 1px dourado 35% de opacidade, raio 16–20px, leve brilho dourado",
+    "faixa_diagonal": "Listras diagonais escuras no topo/rodapé (estilo 'atenção') — uso pontual",
+    "fotografia": "Low-key, fundo preto, luz lateral quente; ambientes executivos à noite com cidade ao fundo"
+  },
+  "componentes": {
+    "botao_primario": {
+      "fundo": "gradiente_metalico",
+      "texto": "#0A0A0A, Montserrat 700, caixa alta, letter-spacing 0.06em",
+      "raio": "12px",
+      "altura": "56px",
+      "hover": "brilho (box-shadow 0 0 24px rgba(201,162,75,.45))"
+    },
+    "botao_secundario": {
+      "fundo": "transparente",
+      "borda": "1px #C9A24B",
+      "texto": "#C9A24B"
+    },
+    "input": {
+      "fundo": "#141414",
+      "borda": "1px #2A2A2A",
+      "borda_foco": "1px #C9A24B + ring 3px rgba(201,162,75,.25)",
+      "raio": "12px",
+      "altura": "56px",
+      "label": "Montserrat 500 14px #B5B5B5"
+    },
+    "chip_selecao": {
+      "inativo": "fundo #141414, borda #2A2A2A, texto branco",
+      "ativo": "borda dourada, texto dourado, fundo rgba(201,162,75,.08)"
+    }
+  },
+  "tom_de_voz": {
+    "estilo": "Direto, empático, confiante. Faz uma pergunta de dor e responde com solução.",
+    "exemplos": [
+      "Quanto custa adiar um sonho?",
+      "Menos burocracia, mais oportunidade.",
+      "Aprovação rápida e sem complicação."
+    ],
+    "cuidados": "Não prometer aprovação nem taxa garantida. Usar 'a partir de' e 'sujeito à análise de crédito'. Exibir CET antes da contratação."
+  },
+  "nota_referencias": "A arte verde 'aprov' (710782230_...jpg) é de outra marca — usada só como referência de LAYOUT do simulador (valor com +/−, chips de prazo, selos '100% Digital · Sem Taxa · Seguro'). Não faz parte da identidade."
+}
