@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Errors,
   Lead,
@@ -174,36 +174,9 @@ export default function LoanForm() {
   };
 
   if (etapa === ETAPAS.length) {
-    const msg = encodeURIComponent(
-      `Olá, Aridiego! Acabei de fazer minha solicitação pelo site.\nProtocolo: ${protocolo}\nNome: ${lead.nome}\nValor: ${brl(lead.valor)} em ${lead.prazo}x`,
-    );
     return (
-      <div ref={topoRef} className="card-gold rounded-2xl p-6 sm:p-8 text-center scroll-mt-6">
-        <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-gold/60 text-gold">
-          <svg viewBox="0 0 24 24" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth={1.8}>
-            <path d="M5 12.5l4.5 4.5L19 7.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-gold">Solicitação recebida</p>
-        <h2 className="mt-2 font-serif text-3xl font-semibold">
-          Obrigado, {lead.nome.trim().split(/\s+/)[0]}!
-        </h2>
-        <p className="mt-3 text-ink-2">
-          Seu protocolo é <strong className="text-ink">{protocolo}</strong>. Nossa equipe vai analisar seu
-          perfil e entrar em contato pelo WhatsApp {lead.celular}.
-        </p>
-        <a
-          href={`https://wa.me/${WHATSAPP_NUMERO}?text=${msg}`}
-          data-origem="obrigado"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-gold mt-6 flex h-14 w-full items-center justify-center gap-2 rounded-xl font-bold uppercase tracking-wider"
-        >
-          Agilizar pelo WhatsApp
-        </a>
-        <p className="mt-4 text-xs text-ink-3">
-          Nunca pedimos depósito antecipado para liberar empréstimo.
-        </p>
+      <div ref={topoRef} className="scroll-mt-6">
+        <Sucesso lead={lead} protocolo={protocolo} />
       </div>
     );
   }
@@ -642,5 +615,62 @@ function LockIcon() {
       <rect x="5" y="10" width="14" height="10" rx="2" />
       <path d="M8 10V7a4 4 0 0 1 8 0v3" />
     </svg>
+  );
+}
+
+const SEGUNDOS_REDIRECIONAR = 4;
+
+/** Tela de sucesso: conta 4s e leva o lead direto para o WhatsApp do atendimento. */
+function Sucesso({ lead, protocolo }: { lead: Lead; protocolo: string }) {
+  const [restante, setRestante] = useState(SEGUNDOS_REDIRECIONAR);
+  const link = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(
+    `Olá, Aridiego! Acabei de fazer minha solicitação pelo site.\nProtocolo: ${protocolo}\nNome: ${lead.nome}\nValor: ${brl(lead.valor)} em ${lead.prazo}x`,
+  )}`;
+
+  useEffect(() => {
+    const intervalo = setInterval(() => setRestante((r) => Math.max(0, r - 1)), 1000);
+    const timer = setTimeout(() => {
+      track("Contact", { content_name: "redirecionamento-automatico" });
+      window.location.assign(link);
+    }, SEGUNDOS_REDIRECIONAR * 1000);
+    return () => {
+      clearInterval(intervalo);
+      clearTimeout(timer);
+    };
+  }, [link]);
+
+  return (
+    <div className="card-gold rounded-2xl p-6 text-center sm:p-8">
+      <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-gold/60 text-gold">
+        <svg viewBox="0 0 24 24" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth={1.8}>
+          <path d="M5 12.5l4.5 4.5L19 7.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
+      <p className="text-xs font-medium uppercase tracking-[0.2em] text-gold">Solicitação recebida</p>
+      <h2 className="mt-2 font-serif text-3xl font-semibold">Obrigado, {lead.nome.trim().split(/\s+/)[0]}!</h2>
+      <p className="mt-3 text-ink-2">
+        Seu protocolo é <strong className="text-ink">{protocolo}</strong>. Estamos te levando para o WhatsApp
+        do especialista para continuar seu atendimento.
+      </p>
+
+      <div className="mt-6 rounded-xl border border-gold/30 bg-gold/5 p-4" role="status" aria-live="polite">
+        <p className="text-sm text-ink-2">Abrindo o WhatsApp em</p>
+        <p className="font-condensed text-5xl font-semibold text-gold-gradient">{restante}</p>
+        <div className="mt-3 h-1 overflow-hidden rounded-full bg-line">
+          <div
+            className="h-full bg-gold transition-[width] duration-1000 ease-linear"
+            style={{ width: `${((SEGUNDOS_REDIRECIONAR - restante) / SEGUNDOS_REDIRECIONAR) * 100}%` }}
+          />
+        </div>
+      </div>
+
+      <p className="mt-4 text-xs text-ink-3">
+        Não abriu?{" "}
+        <a href={link} data-origem="obrigado-manual" className="text-gold underline">
+          Toque aqui
+        </a>
+        . Nunca pedimos depósito antecipado para liberar empréstimo.
+      </p>
+    </div>
   );
 }

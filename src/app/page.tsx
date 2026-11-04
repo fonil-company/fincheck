@@ -1,7 +1,6 @@
 import Image from "next/image";
 import LoanForm from "@/components/LoanForm";
 import FloatingCta from "@/components/FloatingCta";
-import { WHATSAPP_NUMERO } from "@/lib/lead";
 
 /**
  * DEPOIMENTOS: preencha SOMENTE com depoimentos reais e autorizados pelos clientes
@@ -376,15 +375,6 @@ export default function Home() {
               className="btn-gold inline-flex h-14 w-full items-center justify-center rounded-xl px-8 font-bold uppercase tracking-wider sm:w-auto"
             >
               Simular agora — é grátis
-            </a>
-            <a
-              href={`https://wa.me/${WHATSAPP_NUMERO}`}
-              data-origem="cta-final"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-14 w-full items-center justify-center rounded-xl border border-gold/60 px-8 font-semibold text-gold hover:bg-gold/10 sm:w-auto"
-            >
-              Prefiro falar no WhatsApp
             </a>
           </div>
         </div>
