@@ -103,12 +103,20 @@ export default function LoanForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...lead, origem: getOrigem() }),
       });
-      const data = await res.json();
-      if (!res.ok) {
+      // a resposta pode não ser JSON (ex.: página de erro do proxy) — nunca quebrar a tela
+      let data: { protocolo?: string; mensagem?: string; erros?: Errors } = {};
+      try {
+        data = JSON.parse(await res.text());
+      } catch {}
+      if (!res.ok || !data.protocolo) {
         if (data.erros) setErros(data.erros);
-        throw new Error(data.mensagem || "Não foi possível enviar.");
+        throw new Error(
+          data.mensagem ||
+            "Não conseguimos registrar agora. Tente novamente em instantes ou fale com a gente pelo WhatsApp.",
+        );
       }
-      setProtocolo(data.protocolo);
+      const protocoloRecebido = data.protocolo;
+      setProtocolo(protocoloRecebido);
       setUserData(lead);
       track(
         "Lead",
@@ -119,11 +127,15 @@ export default function LoanForm() {
           content_category: lead.motivo,
           parcelas: lead.prazo,
         },
-        data.protocolo,
+        protocoloRecebido,
       );
       irPara(ETAPAS.length);
     } catch (err) {
-      setErroEnvio(err instanceof Error ? err.message : "Erro inesperado. Tente novamente.");
+      setErroEnvio(
+        err instanceof Error && !/JSON|token|fetch/i.test(err.message)
+          ? err.message
+          : "Não conseguimos registrar agora. Tente novamente em instantes ou fale com a gente pelo WhatsApp.",
+      );
     } finally {
       setEnviando(false);
     }

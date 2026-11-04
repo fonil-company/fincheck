@@ -51,7 +51,7 @@ export async function POST(request: Request) {
     console.error("[lead] falha ao gravar na planilha", protocolo, err);
     return Response.json(
       { mensagem: "Não foi possível registrar sua solicitação agora. Tente novamente em instantes." },
-      { status: 502 },
+      { status: 500 },
     );
   }
 
