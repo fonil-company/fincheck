@@ -321,17 +321,17 @@ function atualizarResumo_() {
   var linhas = [
     ['RESUMO DE LEADS', ''],
     ['Total de leads na planilha', '=COUNTA(' + cNome + ')-1'],
-    ['Leads hoje', '=COUNTIFS(' + cData + ',">="&TODAY(),' + cData + ',"<"&(TODAY()+1))'],
-    ['Leads últimos 7 dias', '=COUNTIF(' + cData + ',">="&(TODAY()-6))'],
+    ['Leads hoje', '=COUNTIFS(' + cData + ';">="&TODAY();' + cData + ';"<"&(TODAY()+1))'],
+    ['Leads últimos 7 dias', '=COUNTIF(' + cData + ';">="&(TODAY()-6))'],
     ['Valor total solicitado', '=SUM(' + cValor + ')'],
-    ['Ticket médio', '=IFERROR(AVERAGE(' + cValor + '),0)'],
+    ['Ticket médio', '=IFERROR(AVERAGE(' + cValor + ');0)'],
     ['', ''],
     ['POR STATUS', ''],
   ];
-  STATUS.forEach(function (s) { linhas.push([s[0], '=COUNTIF(' + cStatus + ',"' + s[0] + '")']); });
+  STATUS.forEach(function (s) { linhas.push([s[0], '=COUNTIF(' + cStatus + ';"' + s[0] + '")']); });
   linhas.push(['Taxa de aprovação', '']);
 
-  // rótulos como texto; fórmulas via setFormula (sintaxe padrão do Apps Script, independe do idioma da planilha)
+  // Planilha em português (pt-BR): fórmulas usam ";" como separador de argumentos
   res.getRange(1, 1, linhas.length, 1).setValues(linhas.map(function (l) { return [l[0]]; }));
   linhas.forEach(function (l, i) {
     if (String(l[1]).charAt(0) === '=') res.getRange(i + 1, 2).setFormula(l[1]);
@@ -348,7 +348,7 @@ function atualizarResumo_() {
   res.getRange(2, 2, linhas.length - 1, 1).setHorizontalAlignment('right');
   // fórmula de aprovação aponta para a linha "Aprovado"
   var linhaAprovado = 9 + STATUS.map(function (s) { return s[0]; }).indexOf('Aprovado');
-  res.getRange(linhas.length, 2).setFormula('=IFERROR(B' + linhaAprovado + '/B2,0)');
+  res.getRange(linhas.length, 2).setFormula('=IFERROR(B' + linhaAprovado + '/B2;0)');
 }
 
 /* ============================== UTILITÁRIOS ============================== */
